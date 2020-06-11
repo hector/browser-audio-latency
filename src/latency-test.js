@@ -14,9 +14,9 @@ async function run() {
   const chirpBuffer = await audio.generateChirp(32768);
   const fs = chirpBuffer.sampleRate;
 
-  let recordingBuffer;
+  let recordingResult;
   if (sourceOption === "simulate") {
-    recordingBuffer = audio.simulateRecording(
+    recordingResult = audio.simulateRecording(
       chirpBuffer,
       fs * 0.25,
       fs * 0.25
@@ -24,12 +24,9 @@ async function run() {
     audio.playBuffer(chirpBuffer);
   } else {
     // microphone
-    recordingBuffer = audio.simulateRecording(
-      chirpBuffer,
-      fs * 0.25,
-      fs * 0.25
-    );
+    recordingResult = await audio.playAndRecord(chirpBuffer);
   }
+  const { buffer: recordingBuffer, latency: playLatency } = recordingResult;
 
   const chirpData = chirpBuffer.getChannelData(0);
   const recordingData = recordingBuffer.getChannelData(0);
@@ -53,7 +50,8 @@ async function run() {
 
   const startTime = performance.now();
   const { xcorr, iMax } = crossCorrelationFunction();
-  const latency = (iMax * 1000) / chirpBuffer.sampleRate; // ms
+  const corrLatency = (iMax * 1000) / chirpBuffer.sampleRate; // ms
+  const latency = Math.abs(corrLatency) - playLatency * 1000;
 
   const endTime = performance.now();
 

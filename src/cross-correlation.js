@@ -69,9 +69,9 @@ function crossCorrelation(sig1, sig2) {
     );
   }
 
-  if (sig1.length % 2 !== 0 || sig1.length === 0) {
-    throw new Error("Xcorr: signals do no seem to be 16-bit PCM.");
-  }
+//   if (sig1.length % 2 !== 0 || sig1.length === 0) {
+//     throw new Error("Xcorr: signals do no seem to be 16-bit PCM.");
+//   }
 
   // detect if the signal has not a length equal to a power of 2 (2, 4, 8, 16…), then pad the signals with zeroes.
   // to not mess with the results of ring correlation, it pads with zeros to reach a length equal the second next power of 2.
