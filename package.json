@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dsp.js": "^1.0.1"
+    "dsp.js": "^1.0.1",
+    "tone": "^14.7.7"
   },
   "devDependencies": {
     "beefy": "^2.1.8",
