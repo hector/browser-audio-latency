@@ -122,37 +122,52 @@ function simulateRecording(fromBuffer, startDelay = 4410, endDelay = 4410) {
 }
 
 async function run() {
-  await initAudioContext();
+  const crossCorrelationOption = document.querySelector("#cross-correlation")
+    .selectedOptions[0].value;
+  const sourceOption = document.querySelector("#source").selectedOptions[0]
+    .value;
 
-  // const chirpBuffer = await readAudio("chirp.wav");
-  // const recordingBuffer = await readAudio("chirp-delayed-100ms.wav");
+  await initAudioContext();
 
   const chirpBuffer = await generateChirp(32768);
   const fs = chirpBuffer.sampleRate;
-  playBuffer(chirpBuffer);
-
-  const recordingBuffer = simulateRecording(chirpBuffer, fs * 0.25, fs * 0.25);
-  // playBuffer(recordingBuffer);
+  
+  let recordingBuffer;
+  if (sourceOption === "simulate") {
+    recordingBuffer = simulateRecording(chirpBuffer, fs * 0.25, fs * 0.25);
+    playBuffer(chirpBuffer);
+  } else { // microphone
+    recordingBuffer = simulateRecording(chirpBuffer, fs * 0.25, fs * 0.25);
+  }
+  
   const chirpData = chirpBuffer.getChannelData(0);
   const recordingData = recordingBuffer.getChannelData(0);
 
   if (chirpBuffer.sampleRate !== recordingBuffer.sampleRate)
     throw new Error("different sample rates");
 
+  let crossCorrelationFunction;
+  if (crossCorrelationOption === "sample")
+    crossCorrelationFunction = () =>
+      myCrossCorrelation(chirpData, recordingData);
+  // fft
+  else
+    crossCorrelationFunction = () => {
+      const paddedChirpData = addPadding(chirpData, {
+        value: 0,
+        rightPadding: recordingData.length - chirpData.length,
+      });
+      return crossCorrelation(paddedChirpData, recordingData);
+    };
+
   const startTime = performance.now();
-  // const { xcorr, iMax } = myCrossCorrelation(chirpData, recordingData);
-  const paddedChirpData = addPadding(chirpData, {
-    value: 0,
-    rightPadding: recordingData.length - chirpData.length,
-  });
-  const { xcorr, iMax } = crossCorrelation(paddedChirpData, recordingData);
+  const { xcorr, iMax } = crossCorrelationFunction();
   const latency = (iMax * 1000) / chirpBuffer.sampleRate; // ms
-  console.log(iMax);
 
   const endTime = performance.now();
 
-  console.log("Compute time", endTime - startTime, "ms");
-  console.log("Latency", latency, "ms");
+  document.querySelector("#latency").innerHTML = `Latency: ${latency}ms`
+  document.querySelector("#computation-time").innerHTML = `Computation time: ${endTime - startTime}ms`
   draw(Array.from(xcorr), iMax);
   console.log("Done");
 }

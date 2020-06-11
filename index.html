@@ -23,9 +23,11 @@
         justify-content: center;
         align-items: center;
       }
-      .container button {
+      .container > button {
         height: 3rem;
         font-size: 2rem;
+      }
+      .container > * {
         margin-bottom: 1rem;
       }
     </style>
@@ -33,8 +35,23 @@
 
   <body>
     <div class="container">
-      <button id="btn-run">Simulate latency test</button>
-      <button id="btn-run">Run latency test</button>
+      <div>
+        <label for="cross-correlation">Cross-Correlation: </label>
+        <select id="cross-correlation">
+          <option value="fft" selected>FFT from dsp.js</option>
+          <option value="sample">Difference sample by sample</option>
+        </select>
+      </div>
+      <div>
+        <label for="source">Source: </label>
+        <select id="source">
+          <option value="simulate" selected>Simulate recording</option>
+          <option value="sample">Microphone</option>
+        </select>
+      </div>
+      <button id="btn-run">Latency test</button>
+      <div id="latency"></div>
+      <div id="computation-time"></div>
       <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     </div>
 
