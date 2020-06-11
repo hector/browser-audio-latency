@@ -1,3 +1,5 @@
+const DSP = require("dsp.js");
+
 let audioContext;
 let microphoneStream;
 
@@ -259,10 +261,10 @@ function crossCorrelation(sig1, sig2) {
   // arbitrary sampling rate
   const SAMPLING_RATE = 1;
 
-  const fft1 = new FFT(l, SAMPLING_RATE);
+  const fft1 = new DSP.FFT(l, SAMPLING_RATE);
   fft1.forward(sig1arr);
 
-  const fft2 = new FFT(l, SAMPLING_RATE);
+  const fft2 = new DSP.FFT(l, SAMPLING_RATE);
   fft2.forward(sig2arr);
 
   const realp = new Array(l)
@@ -273,7 +275,7 @@ function crossCorrelation(sig1, sig2) {
     .map((_, i) => -fft1.real[i] * fft2.imag[i] + fft2.real[i] * fft1.imag[i]);
   // note we have taken the complex conjugate of fft2.
 
-  const fftp = new FFT(l, SAMPLING_RATE);
+  const fftp = new DSP.FFT(l, SAMPLING_RATE);
   const xcorr = fftp
     .inverse(realp, imagp)
     .map((coef) => coef / rms1 / rms2 / l); // normalize the module of xcorr to [0, 1]
