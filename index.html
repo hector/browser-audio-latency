@@ -7,11 +7,37 @@
     <title>Latency</title>
     <meta name="description" content="Latency" />
     <meta name="author" content="Hector" />
+    <style>
+      html {
+        min-height: 100vh;
+      }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+      }
+      .container {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container button {
+        height: 3rem;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+    </style>
   </head>
 
   <body>
-    <button id="btn-run">Run</button>
-    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <div class="container">
+      <button id="btn-run">Simulate latency test</button>
+      <button id="btn-run">Run latency test</button>
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    </div>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="dsp.js"></script>
     <script src="index.js"></script>
