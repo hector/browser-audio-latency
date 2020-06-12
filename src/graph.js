@@ -1,4 +1,4 @@
-function draw(data, min = undefined) {
+export function draw(data, min = undefined) {
   const dataPoints = data.map((v) => ({ y: v }));
   if (min)
     dataPoints[min] = {
@@ -26,7 +26,3 @@ function draw(data, min = undefined) {
   });
   chart.render();
 }
-
-module.exports = {
-  draw,
-};

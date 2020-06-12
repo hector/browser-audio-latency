@@ -1,4 +1,4 @@
-function addPadding(fromArray, { value, leftPadding, rightPadding } = {}) {
+export function addPadding(fromArray, { value, leftPadding, rightPadding } = {}) {
   if (!value) value = 0;
   if (!leftPadding) leftPadding = 0;
   if (!rightPadding) rightPadding = 0;
@@ -20,7 +20,3 @@ function addPadding(fromArray, { value, leftPadding, rightPadding } = {}) {
 
   return array;
 }
-
-module.exports = {
-  addPadding,
-};

@@ -1,9 +1,10 @@
-const Tone = require("tone");
-const { addPadding } = require("./utils");
+import * as Tone from "tone";
 
-class Audio {
-  audioContext;
-  microphoneStream;
+import { addPadding } from "./utils";
+
+export default class Audio {
+  // audioContext;
+  // microphoneStream;
 
   constructor() {
     this.initAudioContext();
@@ -153,5 +154,3 @@ class Audio {
     return {buffer, latency: 0};
   }
 }
-
-module.exports = Audio;

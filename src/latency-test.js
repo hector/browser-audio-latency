@@ -1,9 +1,9 @@
-const Audio = require("./audio");
-const { crossCorrelation, myCrossCorrelation } = require("./cross-correlation");
-const { draw } = require("./graph");
-const { addPadding } = require("./utils");
+import Audio from"./audio";
+import { crossCorrelation, myCrossCorrelation } from "./cross-correlation";
+import { draw } from "./graph";
+import { addPadding } from "./utils";
 
-async function run() {
+export async function run() {
   const crossCorrelationOption = document.querySelector("#cross-correlation")
     .selectedOptions[0].value;
   const sourceOption = document.querySelector("#source").selectedOptions[0]
@@ -62,7 +62,3 @@ async function run() {
   draw(Array.from(xcorr), iMax);
   console.log("Done");
 }
-
-module.exports = {
-  run,
-};
