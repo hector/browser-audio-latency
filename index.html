@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><title>Latency</title><meta name="description" content="Latency"/><meta name="author" content="Hector"/><style>html {
+        min-height: 100vh;
+      }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+      }
+      .container {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container > button {
+        height: 3rem;
+        font-size: 2rem;
+      }
+      .container > * {
+        margin-bottom: 1rem;
+      }</style></head><body><div class="container"><div><label for="cross-correlation">Cross-Correlation:</label> <select id="cross-correlation"><option value="fft" selected="selected">FFT from dsp.js</option><option value="sample">Difference sample by sample</option></select></div><div><label for="source">Source:</label> <select id="source"><option value="sample" selected="selected">Microphone</option><option value="simulate">Simulate recording</option></select></div><button id="btn-run">Latency test</button><div id="latency"></div><div id="computation-time"></div><div id="chartContainer" style="height: 300px; width: 100%;"></div></div><script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script><script src="main.js"></script></body></html>
