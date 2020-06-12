@@ -1,7 +1,7 @@
 # browser-audio-latency
 Experiment to measure recording latency in broswers
 
-## Intructions
+## Instructions
 ```bash
 yarn install
 # For development
